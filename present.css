@@ -1,42 +1,55 @@
+.content-layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.wrap-present {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 html, body {
     margin: 0;
-  }
-  
-  .above-fold {
-    height: 100vh;
+}
+
+body {
+    min-height: 100vh;
+}
+
+.above-fold {
+    min-height: 100vh;
     width: 100vw;
-    padding: 0;
+    padding: 2rem 1.5rem 3rem;
     margin: 0;
     perspective: 800px;
     perspective-origin: 50% 200px;
     display: flex;
-    flex-wrap: wrap;
-    position: relative;
-  }
-  .above-fold .info-text {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+}
+
+.above-fold .info-text {
     width: 100%;
-    display: block;
     text-align: center;
     margin: 0;
     padding: 0;
     color: #d6078e;
     font-family: "Avenir";
-    font-weight: 100;
-    font-size: 18px;
-    height: 25px;
-    align-self: flex-end;
-  }
-  
-  .wrap-present {
-    width: 100%;
-    display: flex;
-    align-self: flex-end;
-  }
+    font-weight: 600;
+    font-size: clamp(1rem, 2.2vw, 1.25rem);
+    letter-spacing: 0.04em;
+}
   
   .present-box {
     transform-style: preserve-3d;
-    width: 200px;
-    height: 200px;
+    width: clamp(180px, 30vw, 240px);
+    height: clamp(180px, 30vw, 240px);
     margin: auto;
     -webkit-animation: rotate 11s alternate linear infinite;
             animation: rotate 11s alternate linear infinite;
@@ -79,11 +92,15 @@ html, body {
     opacity: 0.3;
     width: 0;
   }
+  .present-box.open > .side.top,
+  .present-box.open > .side.bottom {
+    opacity: 0;
+  }
   
   .present-box .present {
     position: absolute;
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
     z-index: 50;
     transform: rotateY(-180deg) rotateX(180deg) translateZ(-100px);
     display: flex;
@@ -92,7 +109,7 @@ html, body {
     visibility: hidden;
   }
   .present-box .present > .img-wrap {
-    width: 200px;
+    width: 100%;
     align-self: center;
     transition: transform 400ms;
     opacity: 0;
@@ -113,8 +130,8 @@ html, body {
   }
   
   .present-box > .side {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
     position: absolute;
     display: block;
     background: repeating-linear-gradient(45deg, #cc2000, #cc2000 20px, #ffffff 20px, #ffffff 40px);

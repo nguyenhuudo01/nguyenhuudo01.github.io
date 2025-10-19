@@ -1,6 +1,16 @@
 var to = nameGirl;
 var gift_url = giftUrl;
-var gift_image_url = giftImage || giftImageBase64;
+var gift_images = (typeof giftImages !== 'undefined' && Array.isArray(giftImages) && giftImages.length) ? giftImages : [giftImage];
+var currentIndex = 0;
+
+function swapImages(index) {
+  var activeSrc = gift_images[index] || giftImageBase64;
+  document.querySelector('#card .avatar').setAttribute('src', activeSrc);
+  var presentImg = presentImage.querySelector('img');
+  if (presentImg) {
+    presentImg.setAttribute('src', activeSrc);
+  }
+}
 
 var nametag = document.getElementById("nametag");
 var present = document.getElementById("present");
@@ -22,19 +32,29 @@ function init() {
     presentImage.appendChild(_giftLink);
   }
   
-  if (gift_image_url) {
+  if (giftImage) {
     _giftImg = document.createElement("img");
-    _giftImg.src = gift_image_url;
+    _giftImg.src = giftImage;
     if(_giftLink) {
       _giftLink.appendChild(_giftImg);
     } else {
       presentImage.appendChild(_giftImg);
     }
   }
-    
+  
   present.addEventListener("click", function(e){
-    present.classList.toggle("open");
-    document.getElementById('card').classList.add('card-show');
+    if (!present.classList.contains("open")) {
+      present.classList.add("open");
+      document.getElementById('card').classList.add('card-show');
+      swapImages(currentIndex);
+    } else {
+      present.classList.remove("open");
+      setTimeout(function(){
+        currentIndex = (currentIndex + 1) % gift_images.length;
+        swapImages(currentIndex);
+        present.classList.add("open");
+      }, 500);
+    }
   }, false);
   
   
